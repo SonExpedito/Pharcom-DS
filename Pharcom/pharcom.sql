@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Set-2023 às 18:37
--- Versão do servidor: 10.4.22-MariaDB
--- versão do PHP: 8.0.13
+-- Tempo de geração: 31/10/2023 às 01:29
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `categoria`
+-- Estrutura para tabela `categoria`
 --
 
 CREATE DATABASE `pharcom`;
@@ -34,12 +34,12 @@ USE `pharcom`;
 CREATE TABLE `categoria` (
   `Id _Categoria` int(11) NOT NULL,
   `Descrição` varchar(300) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cliente`
+-- Estrutura para tabela `cliente`
 --
 
 CREATE TABLE `cliente` (
@@ -50,30 +50,31 @@ CREATE TABLE `cliente` (
   `Senha` varchar(40) NOT NULL,
   `Email` varchar(200) NOT NULL,
   `CPF` varchar(16) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `cliente`
+-- Despejando dados para a tabela `cliente`
 --
 
 INSERT INTO `cliente` (`Id_Cliente`, `Nome`, `DataNasc`, `Usuário`, `Senha`, `Email`, `CPF`) VALUES
-(1, 'Alex', '2023-09-04', 'Alex', '123', 'AlexDaDizessete@gmail.com', 'ervqer');
+(1, 'Alex', '2023-09-04', 'Alex', '123', 'AlexDaDizessete@gmail.com', 'ervqer'),
+(2, 'Alexx', '2023-09-04', 'Gojo', '123', 'AlexDaDizessete@gmail.com', 'ervqer');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `controle`
+-- Estrutura para tabela `controle`
 --
 
 CREATE TABLE `controle` (
   `ID_Func` int(11) NOT NULL,
   `ID_Remedio` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `funcionário`
+-- Estrutura para tabela `funcionário`
 --
 
 CREATE TABLE `funcionário` (
@@ -85,10 +86,10 @@ CREATE TABLE `funcionário` (
   `Email` varchar(50) NOT NULL,
   `Data_Nasc` date NOT NULL,
   `CPF` varchar(14) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `funcionário`
+-- Despejando dados para a tabela `funcionário`
 --
 
 INSERT INTO `funcionário` (`ID_Func`, `Nome_Func`, `Usuário`, `Nivel_ID`, `Senha`, `Email`, `Data_Nasc`, `CPF`) VALUES
@@ -97,18 +98,18 @@ INSERT INTO `funcionário` (`ID_Func`, `Nome_Func`, `Usuário`, `Nivel_ID`, `Sen
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `nível-restrição`
+-- Estrutura para tabela `nível-restrição`
 --
 
 CREATE TABLE `nível-restrição` (
   `Nivel_ID` int(11) NOT NULL,
   `Descrição` varchar(80) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `registro_compra`
+-- Estrutura para tabela `registro_compra`
 --
 
 CREATE TABLE `registro_compra` (
@@ -116,12 +117,19 @@ CREATE TABLE `registro_compra` (
   `Id_Cliente` int(11) NOT NULL,
   `Data_compra` date NOT NULL,
   `Quantidade` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `registro_compra`
+--
+
+INSERT INTO `registro_compra` (`Id_Remedio`, `Id_Cliente`, `Data_compra`, `Quantidade`) VALUES
+(2, 2, '2023-10-30', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `remedio`
+-- Estrutura para tabela `remedio`
 --
 
 CREATE TABLE `remedio` (
@@ -131,51 +139,54 @@ CREATE TABLE `remedio` (
   `Preço` float NOT NULL,
   `Estoque` int(11) NOT NULL,
   `Descrição` varchar(80) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `remedio`
+-- Despejando dados para a tabela `remedio`
 --
 
 INSERT INTO `remedio` (`Id_Rem`, `Nome_Rem`, `Categoria_Num`, `Preço`, `Estoque`, `Descrição`) VALUES
-(1, 'Loratamed', 2, 10, 12, 'Rinite');
+(1, 'Dorflex', 2, 10, 12, 'Analgésico e Relaxante Muscular'),
+(2, 'Cetoprofeno', 5, 13, 20, 'anti-inflamatório, analgésico e antitérmico'),
+(3, 'Desloratadina', 1, 5, 50, ' anti-histamínico H₁ tricíclico que é usado para tratar alergias'),
+(4, 'Merthiolate', 3, 20, 15, ' fungicida , virucida esporicida ');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `categoria`
+-- Índices de tabela `categoria`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`Id _Categoria`);
 
 --
--- Índices para tabela `cliente`
+-- Índices de tabela `cliente`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`Id_Cliente`);
 
 --
--- Índices para tabela `funcionário`
+-- Índices de tabela `funcionário`
 --
 ALTER TABLE `funcionário`
   ADD PRIMARY KEY (`ID_Func`);
 
 --
--- Índices para tabela `nível-restrição`
+-- Índices de tabela `nível-restrição`
 --
 ALTER TABLE `nível-restrição`
   ADD PRIMARY KEY (`Nivel_ID`);
 
 --
--- Índices para tabela `remedio`
+-- Índices de tabela `remedio`
 --
 ALTER TABLE `remedio`
   ADD PRIMARY KEY (`Id_Rem`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -188,7 +199,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `Id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `funcionário`
@@ -206,7 +217,7 @@ ALTER TABLE `nível-restrição`
 -- AUTO_INCREMENT de tabela `remedio`
 --
 ALTER TABLE `remedio`
-  MODIFY `Id_Rem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id_Rem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
