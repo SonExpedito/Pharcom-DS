@@ -36,6 +36,7 @@ Controle\Remedio.class
 Controle\UsuarioMenu$4.class
 Controle\cliente$6.class
 Conexão\Conexao.class
+Controle\NTFiscal$ImagePanel.class
 Controle\UsuarioMenu$1.class
 Controle\cliente$2.class
 Controle\Funcionarios$7.class
@@ -48,6 +49,7 @@ Controle\Login$1.class
 Controle\MenuAdm$3.class
 Controle\Login$ImagePanel.class
 Controle\UsuarioMenu$5.class
+Controle\JFramel.class
 Controle\Remedio$7.class
 Controle\MenuAdm$9.class
 Controle\MenuAdm$2.class
@@ -57,6 +59,7 @@ Controle\cliente$7.class
 Controle\MenuAdm$6.class
 Controle\Sobrenos$ImagePanel.class
 Controle\Funcionarios$11.class
+Controle\NTFiscal.class
 Controle\Remedio$10.class
 Controle\Sobrenos$1.class
 Controle\cliente$1.class

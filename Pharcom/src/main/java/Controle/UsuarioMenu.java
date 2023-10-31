@@ -47,7 +47,7 @@ public class UsuarioMenu extends JFrame {
 
     JButton product1button, product2button, product3button, product4button;
 
-    public UsuarioMenu(int Id_user) {
+    public UsuarioMenu(int Id_user, String nomeuser) {
         con_cliente = new Conexao();
 
         con_cliente.conecta();
@@ -57,7 +57,8 @@ public class UsuarioMenu extends JFrame {
         ImageIcon icone = new ImageIcon("src/imagens/icone.png"); // Substitua pelo caminho correto do ícone
         setIconImage(icone.getImage());
 
-        int Teste = Id_user;
+        int IDuser = Id_user;
+        String clientename = nomeuser;
 
         //Logo
         ImageIcon pi1 = createResizedImageIcon("src/imagens/dorflex.png", 140 ,120);
@@ -132,12 +133,16 @@ public class UsuarioMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int id = 1;
                 int qtd = 1;
+                String produtonome = "Dorflex";
                 LocalDate datevar = LocalDate.now();
 
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + Teste + "','" + datevar + "','" + qtd + "')";
+                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                     con_cliente.statement.executeUpdate(insert_sql);
                     JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                    
+                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
+                    notinha.setVisible(true);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,12 +155,16 @@ public class UsuarioMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int id = 2;
                 int qtd = 1;
+                String produtonome = "Cetoprofeno";
                 LocalDate datevar = LocalDate.now();
 
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + Teste + "','" + datevar + "','" + qtd + "')";
+                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                     con_cliente.statement.executeUpdate(insert_sql);
                     JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                    
+                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
+                    notinha.setVisible(true);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,12 +177,15 @@ public class UsuarioMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int id = 2;
                 int qtd = 1;
+                String produtonome = "Desloratadina";
                 LocalDate datevar = LocalDate.now();
 
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + Teste + "','" + datevar + "','" + qtd + "')";
+                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                     con_cliente.statement.executeUpdate(insert_sql);
                     JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
+                    notinha.setVisible(true);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,12 +198,15 @@ public class UsuarioMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int id = 2;
                 int qtd = 1;
+                String produtonome = "Merthiolate";
                 LocalDate datevar = LocalDate.now();
 
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + Teste + "','" + datevar + "','" + qtd + "')";
+                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                     con_cliente.statement.executeUpdate(insert_sql);
                     JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
+                    notinha.setVisible(true);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -278,9 +293,9 @@ public class UsuarioMenu extends JFrame {
 
     }
 
-    public static void main(String[] args, int Id_user) {
+    public static void main(String[] args, int Id_user, String nomeuser) {
         try {
-            UsuarioMenu menu = new UsuarioMenu(Id_user);
+            UsuarioMenu menu = new UsuarioMenu(Id_user, nomeuser);
             menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
