@@ -21,27 +21,20 @@ public class Conexao {
     
     public String erros = "";
     
-    public boolean conecta(){
-           boolean result = true;
-          try{
-              Class.forName(driver);
-              conexao = DriverManager.getConnection(url, usuario, senha);
-              
-              
-          }
-          catch(ClassNotFoundException Driver){
-           
-              erros = "Driver não foi encontrado";
-              result = false;
-          }
-          
-          catch(SQLException Fonte){
-                erros = "Banco de Dados Não Encontrado";
-                result = false;
-          }
-          
-            return result;
-        
+ public boolean conecta() {
+        boolean result = true;
+        try {
+            Class.forName(driver);
+            conexao = DriverManager.getConnection(url, usuario, senha);
+            statement = conexao.createStatement(); // Inicialize o objeto Statement
+        } catch (ClassNotFoundException Driver) {
+            erros = "Driver não foi encontrado";
+            result = false;
+        } catch (SQLException Fonte) {
+            erros = "Banco de Dados Não Encontrado";
+            result = false;
+        }
+        return result;
     }
     
     public void desconecta(){

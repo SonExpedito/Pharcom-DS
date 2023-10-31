@@ -66,7 +66,7 @@ public class cliente extends JFrame {
         
          try {
            
-            MaskFormatter mData = new MaskFormatter("####/##/##");
+           MaskFormatter mData = new MaskFormatter("####/##/##");
     
             tData = new JFormattedTextField(mData);
             tData.setBounds(100, 140, 30, 20);
@@ -98,17 +98,15 @@ public class cliente extends JFrame {
 
          sair.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                MenuAdm adm;
-                try {
-                    adm = new MenuAdm();
-                    adm.setVisible(true);
-                    dispose();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Remedio.class.getName()).log(Level.SEVERE, null, ex);
+                try{
+                MenuAdm user = new MenuAdm(); 
+                user.setVisible(true);
+                dispose();
+                }catch (SQLException erro) {
+                    JOptionPane.showMessageDialog(null, "Não foi possivel acessar o primeiro registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
                 } catch (ParseException ex) {
-                    Logger.getLogger(Remedio.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
             }
         });
 
@@ -438,6 +436,10 @@ public class cliente extends JFrame {
             tUsuario.setText(con_cliente.resultset.getString("Usuário"));
             tSenha.setText(con_cliente.resultset.getString("Senha"));
             tEmail.setText(con_cliente.resultset.getString("Email"));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+           String dataFormatada = sdf.format(con_cliente.resultset.getDate("DataNasc"));
+           tData.setText(dataFormatada);
+            
             tCPF.setText(con_cliente.resultset.getString("CPF"));
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Não localizou dados: " + erro, "Mensagem do prograna", JOptionPane.INFORMATION_MESSAGE);

@@ -101,7 +101,9 @@ public class Login extends JFrame {
                             String pesquisa2 = "select * from cliente where Usuário like '" +Nome.getText() + "' && Senha = " +Senha.getText() + "";
                             con_cliente.executaSQL(pesquisa2);
                             if(con_cliente.resultset.first()){
-                                    UsuarioMenu User = new UsuarioMenu();
+                                String iduser = con_cliente.resultset.getString("Id_Cliente");
+                                int Id_user = Integer.parseInt(iduser);
+                                    UsuarioMenu User = new UsuarioMenu(Id_user);
                                     User.setVisible(true);
                                      dispose();
                             }else{      
