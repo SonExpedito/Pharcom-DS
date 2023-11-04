@@ -64,6 +64,8 @@ public class UsuarioMenu extends JFrame {
         int IDuser = Id_user;
         String clientename = nomeuser;
 
+        ImageIcon customicon = new ImageIcon("src/imagens/confirmado.png");
+
         //Logo
         ImageIcon pi1 = createResizedImageIcon("src/imagens/dorflex.png", 140, 120);
         product1image = new JLabel(pi1);
@@ -154,26 +156,26 @@ public class UsuarioMenu extends JFrame {
 
                 // Use um switch case para ajustar os bounds com base no valor de i
                 switch (i) {
-                    case 0:
+                    case 0 -> {
                         estoque.setBounds(90, 190, 200, 100);
                         valor.setBounds(90, 220, 200, 100);
-                        break;
-                    case 1:
+                    }
+                    case 1 -> {
                         estoque.setBounds(260, 180, 200, 100);
                         valor.setBounds(260, 210, 200, 100);
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         estoque.setBounds(430, 200, 200, 100);
                         valor.setBounds(430, 230, 200, 100);
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         estoque.setBounds(580, 200, 200, 100);
                         valor.setBounds(580, 230, 200, 100);
-                        break;
-                    default:
-                        // Lida com outros casos, se necessário
-                        break;
+                    }
+                    default -> {
+                    }
                 }
+                // Lida com outros casos, se necessário
 
                 tela.add(estoque);
                 tela.add(valor);
@@ -189,26 +191,26 @@ public class UsuarioMenu extends JFrame {
 
             // Use um switch case para ajustar os bounds com base no valor de i
             switch (i) {
-                case 0:
+                case 0 -> {
                     textqtd.setBounds(93, 290, 50, 20);
                     quantidadeFields[i].setBounds(120, 290, 50, 23);
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     textqtd.setBounds(263, 280, 50, 20);
                     quantidadeFields[i].setBounds(290, 280, 50, 23);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     textqtd.setBounds(433, 300, 50, 20);
                     quantidadeFields[i].setBounds(460, 300, 50, 23);
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     textqtd.setBounds(583, 300, 50, 20);
                     quantidadeFields[i].setBounds(610, 300, 50, 23);
-                    break;
-                default:
-                    // Lidar com outros casos, se necessário
-                    break;
+                }
+                default -> {
+                }
             }
+            // Lidar com outros casos, se necessário
 
             add(textqtd);
             add(quantidadeFields[i]);
@@ -231,7 +233,8 @@ public class UsuarioMenu extends JFrame {
                             try {
                                 String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                                 con_cliente.statement.executeUpdate(insert_sql);
-                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso", "Confirmação",
+                                        JOptionPane.INFORMATION_MESSAGE, customicon);
 
                                 int newquantidade = Integer.parseInt(quantidadebd) - qtd;
                                 String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;
@@ -273,7 +276,8 @@ public class UsuarioMenu extends JFrame {
                             try {
                                 String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                                 con_cliente.statement.executeUpdate(insert_sql);
-                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso", "Confirmação",
+                                        JOptionPane.INFORMATION_MESSAGE, customicon);
 
                                 int newquantidade = Integer.parseInt(quantidadebd) - qtd;
                                 String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;
@@ -315,7 +319,8 @@ public class UsuarioMenu extends JFrame {
                             try {
                                 String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                                 con_cliente.statement.executeUpdate(insert_sql);
-                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso", "Confirmação",
+                                        JOptionPane.INFORMATION_MESSAGE, customicon);
 
                                 int newquantidade = Integer.parseInt(quantidadebd) - qtd;
                                 String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;
@@ -357,7 +362,8 @@ public class UsuarioMenu extends JFrame {
                             try {
                                 String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
                                 con_cliente.statement.executeUpdate(insert_sql);
-                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso", "Confirmação",
+                                        JOptionPane.INFORMATION_MESSAGE, customicon);
 
                                 int newquantidade = Integer.parseInt(quantidadebd) - qtd;
                                 String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;

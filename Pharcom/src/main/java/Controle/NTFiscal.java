@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -37,7 +38,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class NTFiscal extends JFrame {
 
     Conexao con_cliente;
-    JLabel data, horario, nome, produto, quantidade, valor;
+    JLabel data, horario, nome, produto, quantidade, valor,CFOP;
 
     public NTFiscal(String nomeuser, int produtoid, int quantidadecompra) throws SQLException {
         con_cliente = new Conexao();
@@ -57,8 +58,20 @@ public class NTFiscal extends JFrame {
             LocalTime timezinho = LocalTime.now();
             String horaFormatada = timezinho.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
+             // Lista de CFOPs de exemplo
+        String[] cfops = {
+            "5101", "5405", "5902", "6101", "6949"
+        };
+
+        // Crie um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+        // Gere um CFOP aleatório da lista
+        String cfopGerado = cfops[random.nextInt(cfops.length)];
+            
             nome = new JLabel("Cliente: " + nomeuser);
             produto = new JLabel("Produto: " + produtonome);
+            CFOP = new JLabel("CFOP: " +cfopGerado);
             quantidade = new JLabel("Quantidade: " + quantidadecompra);
             data = new JLabel("Data: " + datazina);
             horario = new JLabel("Hora: " + horaFormatada);
@@ -68,25 +81,29 @@ public class NTFiscal extends JFrame {
             nome.setFont(new Font("Tahoma", Font.BOLD, 12));
             nome.setBounds(50, 220, 200, 100);
 
+            CFOP.setForeground(new Color(43, 45, 66));
+            CFOP.setFont(new Font("Tahoma", Font.BOLD, 12));
+            CFOP.setBounds(50, 250, 200, 100);
+            
             produto.setForeground(new Color(43, 45, 66));
             produto.setFont(new Font("Tahoma", Font.BOLD, 12));
-            produto.setBounds(50, 250, 200, 100);
+            produto.setBounds(50, 280, 200, 100);
 
             quantidade.setForeground(new Color(43, 45, 66));
             quantidade.setFont(new Font("Tahoma", Font.BOLD, 12));
-            quantidade.setBounds(50, 280, 200, 100);
+            quantidade.setBounds(50, 310, 200, 100);
 
             data.setForeground(new Color(43, 45, 66));
             data.setFont(new Font("Tahoma", Font.BOLD, 12));
-            data.setBounds(50, 310, 200, 100);
+            data.setBounds(50, 340, 200, 100);
 
             horario.setForeground(new Color(43, 45, 66));
             horario.setFont(new Font("Tahoma", Font.BOLD, 12));
-            horario.setBounds(50, 340, 200, 100);
+            horario.setBounds(50, 370, 200, 100);
 
             valor.setForeground(new Color(43, 45, 66));
             valor.setFont(new Font("Tahoma", Font.BOLD, 12));
-            valor.setBounds(50, 370, 200, 100);
+            valor.setBounds(50, 400, 200, 100);
 
             Container tela = getContentPane();
 
@@ -99,6 +116,7 @@ public class NTFiscal extends JFrame {
             tela.add(data);
             tela.add(horario);
             tela.add(valor);
+            tela.add(CFOP);
 
             setTitle("Nota Fiscal");
             setResizable(false);
