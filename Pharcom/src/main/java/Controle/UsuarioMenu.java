@@ -161,8 +161,8 @@ public class UsuarioMenu extends JFrame {
                         valor.setBounds(90, 220, 200, 100);
                     }
                     case 1 -> {
-                        estoque.setBounds(260, 180, 200, 100);
-                        valor.setBounds(260, 210, 200, 100);
+                        estoque.setBounds(260, 190, 200, 100);
+                        valor.setBounds(260, 220, 200, 100);
                     }
                     case 2 -> {
                         estoque.setBounds(430, 200, 200, 100);
@@ -196,8 +196,8 @@ public class UsuarioMenu extends JFrame {
                     quantidadeFields[i].setBounds(120, 290, 50, 23);
                 }
                 case 1 -> {
-                    textqtd.setBounds(263, 280, 50, 20);
-                    quantidadeFields[i].setBounds(290, 280, 50, 23);
+                    textqtd.setBounds(263, 290, 50, 20);
+                    quantidadeFields[i].setBounds(290, 290, 50, 23);
                 }
                 case 2 -> {
                     textqtd.setBounds(433, 300, 50, 20);
