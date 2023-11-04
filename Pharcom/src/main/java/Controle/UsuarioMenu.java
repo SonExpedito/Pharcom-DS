@@ -32,6 +32,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -42,12 +43,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class UsuarioMenu extends JFrame {
 
     Conexao con_cliente;
+    int var1 = 1, var2 = 2, var3 = 3, var4 = 4;
     JLabel titulo, product1name, product2name, product3name, productname4,
             product1image, productimage2, productimage3, productimage4;
 
+    JTextField[] quantidadeFields;
+
     JButton product1button, product2button, product3button, product4button;
 
-    public UsuarioMenu(int Id_user, String nomeuser) {
+    public UsuarioMenu(int Id_user, String nomeuser) throws SQLException {
         con_cliente = new Conexao();
 
         con_cliente.conecta();
@@ -61,7 +65,7 @@ public class UsuarioMenu extends JFrame {
         String clientename = nomeuser;
 
         //Logo
-        ImageIcon pi1 = createResizedImageIcon("src/imagens/dorflex.png", 140 ,120);
+        ImageIcon pi1 = createResizedImageIcon("src/imagens/dorflex.png", 140, 120);
         product1image = new JLabel(pi1);
         product1image.setBounds(80, 130, 140, 120);
         tela.add(product1image);
@@ -71,12 +75,12 @@ public class UsuarioMenu extends JFrame {
         productimage2.setBounds(260, 110, 150, 150);
         tela.add(productimage2);
 
-        ImageIcon  pi3= createResizedImageIcon("src/imagens/Desloratadina.png", 80, 130);
+        ImageIcon pi3 = createResizedImageIcon("src/imagens/Desloratadina.png", 80, 130);
         productimage3 = new JLabel(pi3);
         productimage3.setBounds(450, 110, 80, 130);
         tela.add(productimage3);
 
-        ImageIcon  pi4 = createResizedImageIcon("src/imagens/Methiolate.png", 70, 130);
+        ImageIcon pi4 = createResizedImageIcon("src/imagens/Methiolate.png", 70, 130);
         productimage4 = new JLabel(pi4);
         productimage4.setBounds(620, 110, 70, 130);
         tela.add(productimage4);
@@ -98,14 +102,14 @@ public class UsuarioMenu extends JFrame {
         product4button.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
         product4button.setForeground(new Color(237, 242, 244));
 
-        product1button.setBounds(80, 240, 150, 30);
-        product2button.setBounds(260, 240, 150, 30);
-        product3button.setBounds(420, 240, 150, 30);
-        product4button.setBounds(580, 240, 150, 30);
+        product1button.setBounds(80, 330, 150, 30);
+        product2button.setBounds(260, 330, 150, 30);
+        product3button.setBounds(420, 330, 150, 30);
+        product4button.setBounds(580, 330, 150, 30);
 
         //Titulo
         titulo = new JLabel("Produtos");
-        titulo.setBounds(310, 5, 200, 100);
+        titulo.setBounds(330, 5, 200, 100);
         titulo.setForeground(new Color(43, 45, 66));
         titulo.setFont(new Font("Tahoma", Font.BOLD, 30));
 
@@ -129,89 +133,252 @@ public class UsuarioMenu extends JFrame {
         productname4.setForeground(new Color(43, 45, 66));
         productname4.setFont(new Font("Tahoma", Font.BOLD, 15));
 
+        //Quantidade e Preço dos Produtos.
+        int[] varArray = {var1, var2, var3, var4};
+
+        for (int i = 0; i < varArray.length; i++) {
+            String pesquisaest = "select * from remedio where Id_Rem = '" + varArray[i] + "'";
+            con_cliente.executaSQL(pesquisaest);
+
+            if (con_cliente.resultset != null && con_cliente.resultset.next()) {
+                String produtoest = con_cliente.resultset.getString("Estoque");
+                String produtopreco = con_cliente.resultset.getString("Preço");
+                JLabel estoque = new JLabel("Estoque " + produtoest);
+                JLabel valor = new JLabel("Preço: R$" + produtopreco);
+
+                estoque.setForeground(new Color(63, 75, 95));
+                estoque.setFont(new Font("Tahoma", Font.BOLD, 12));
+
+                valor.setForeground(new Color(43, 45, 66));
+                valor.setFont(new Font("Tahoma", Font.BOLD, 12));
+
+                // Use um switch case para ajustar os bounds com base no valor de i
+                switch (i) {
+                    case 0:
+                        estoque.setBounds(90, 190, 200, 100);
+                        valor.setBounds(90, 220, 200, 100);
+                        break;
+                    case 1:
+                        estoque.setBounds(260, 180, 200, 100);
+                        valor.setBounds(260, 210, 200, 100);
+                        break;
+                    case 2:
+                        estoque.setBounds(430, 200, 200, 100);
+                        valor.setBounds(430, 230, 200, 100);
+                        break;
+                    case 3:
+                        estoque.setBounds(580, 200, 200, 100);
+                        valor.setBounds(580, 230, 200, 100);
+                        break;
+                    default:
+                        // Lida com outros casos, se necessário
+                        break;
+                }
+
+                tela.add(estoque);
+                tela.add(valor);
+            }
+        }
+
+        quantidadeFields = new JTextField[4];
+        for (int i = 0; i < quantidadeFields.length; i++) {
+            quantidadeFields[i] = new JTextField(2);
+            quantidadeFields[i].setForeground(new Color(43, 45, 66));
+            quantidadeFields[i].setText("1");
+            JLabel textqtd = new JLabel("QTD:");
+
+            // Use um switch case para ajustar os bounds com base no valor de i
+            switch (i) {
+                case 0:
+                    textqtd.setBounds(93, 290, 50, 20);
+                    quantidadeFields[i].setBounds(120, 290, 50, 23);
+                    break;
+                case 1:
+                    textqtd.setBounds(263, 280, 50, 20);
+                    quantidadeFields[i].setBounds(290, 280, 50, 23);
+                    break;
+                case 2:
+                    textqtd.setBounds(433, 300, 50, 20);
+                    quantidadeFields[i].setBounds(460, 300, 50, 23);
+                    break;
+                case 3:
+                    textqtd.setBounds(583, 300, 50, 20);
+                    quantidadeFields[i].setBounds(610, 300, 50, 23);
+                    break;
+                default:
+                    // Lidar com outros casos, se necessário
+                    break;
+            }
+
+            add(textqtd);
+            add(quantidadeFields[i]);
+        }
+
         product1button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int id = 1;
-                int qtd = 1;
-                String produtonome = "Dorflex";
-                LocalDate datevar = LocalDate.now();
-
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
-                    con_cliente.statement.executeUpdate(insert_sql);
-                    JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
-                    
-                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
-                    notinha.setVisible(true);
+                    int id = 1;
+                    String estoquselecionado = quantidadeFields[0].getText();;
+                    int qtd = Integer.parseInt(estoquselecionado);
+                    LocalDate datevar = LocalDate.now();
+                    String pesquisa2 = "select * from remedio where Id_Rem = '" + id + "'";
+                    con_cliente.executaSQL(pesquisa2);
 
+                    if (con_cliente.resultset != null && con_cliente.resultset.next()) {
+                        String quantidadebd = con_cliente.resultset.getString("Estoque");
+
+                        if (Integer.parseInt(quantidadebd) >= qtd) {
+                            try {
+                                String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
+                                con_cliente.statement.executeUpdate(insert_sql);
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+
+                                int newquantidade = Integer.parseInt(quantidadebd) - qtd;
+                                String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;
+                                con_cliente.statement.executeUpdate(atualiarsql);
+
+                                NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
+                                notinha.setVisible(true);
+                                tela.revalidate();
+                                tela.repaint();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Não foi possível comprar, pois a quantidade está indisponível.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Produto não encontrado na base de dados.");
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         });
-        
-         product2button.addActionListener(new ActionListener() {
+
+        product2button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int id = 2;
-                int qtd = 1;
-                String produtonome = "Cetoprofeno";
-                LocalDate datevar = LocalDate.now();
-
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
-                    con_cliente.statement.executeUpdate(insert_sql);
-                    JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
-                    
-                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
-                    notinha.setVisible(true);
+                    int id = 2;
+                    String estoquselecionado = quantidadeFields[1].getText();;
+                    int qtd = Integer.parseInt(estoquselecionado);
+                    LocalDate datevar = LocalDate.now();
+                    String pesquisa2 = "select * from remedio where Id_Rem = '" + id + "'";
+                    con_cliente.executaSQL(pesquisa2);
 
+                    if (con_cliente.resultset != null && con_cliente.resultset.next()) {
+                        String quantidadebd = con_cliente.resultset.getString("Estoque");
+
+                        if (Integer.parseInt(quantidadebd) >= qtd) {
+                            try {
+                                String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
+                                con_cliente.statement.executeUpdate(insert_sql);
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+
+                                int newquantidade = Integer.parseInt(quantidadebd) - qtd;
+                                String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;
+                                con_cliente.statement.executeUpdate(atualiarsql);
+
+                                NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
+                                notinha.setVisible(true);
+                                tela.revalidate();
+                                tela.repaint();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Não foi possível comprar, pois a quantidade está indisponível.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Produto não encontrado na base de dados.");
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         });
-         
-         product3button.addActionListener(new ActionListener() {
+
+        product3button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int id = 2;
-                int qtd = 1;
-                String produtonome = "Desloratadina";
-                LocalDate datevar = LocalDate.now();
-
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
-                    con_cliente.statement.executeUpdate(insert_sql);
-                    JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
-                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
-                    notinha.setVisible(true);
+                    int id = 3;
+                    String estoquselecionado = quantidadeFields[2].getText();;
+                    int qtd = Integer.parseInt(estoquselecionado);
+                    LocalDate datevar = LocalDate.now();
+                    String pesquisa2 = "select * from remedio where Id_Rem = '" + id + "'";
+                    con_cliente.executaSQL(pesquisa2);
 
+                    if (con_cliente.resultset != null && con_cliente.resultset.next()) {
+                        String quantidadebd = con_cliente.resultset.getString("Estoque");
+
+                        if (Integer.parseInt(quantidadebd) >= qtd) {
+                            try {
+                                String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
+                                con_cliente.statement.executeUpdate(insert_sql);
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+
+                                int newquantidade = Integer.parseInt(quantidadebd) - qtd;
+                                String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;
+                                con_cliente.statement.executeUpdate(atualiarsql);
+
+                                NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
+                                notinha.setVisible(true);
+                                tela.revalidate();
+                                tela.repaint();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Não foi possível comprar, pois a quantidade está indisponível.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Produto não encontrado na base de dados.");
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         });
-         
-         product4button.addActionListener(new ActionListener() {
+
+        product4button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int id = 2;
-                int qtd = 1;
-                String produtonome = "Merthiolate";
-                LocalDate datevar = LocalDate.now();
-
                 try {
-                    String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
-                    con_cliente.statement.executeUpdate(insert_sql);
-                    JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
-                    NTFiscal notinha = new NTFiscal(nomeuser,produtonome);
-                    notinha.setVisible(true);
+                    int id = 4;
+                    String estoquselecionado = quantidadeFields[3].getText();;
+                    int qtd = Integer.parseInt(estoquselecionado);
+                    LocalDate datevar = LocalDate.now();
+                    String pesquisa2 = "select * from remedio where Id_Rem = '" + id + "'";
+                    con_cliente.executaSQL(pesquisa2);
 
+                    if (con_cliente.resultset != null && con_cliente.resultset.next()) {
+                        String quantidadebd = con_cliente.resultset.getString("Estoque");
+
+                        if (Integer.parseInt(quantidadebd) >= qtd) {
+                            try {
+                                String insert_sql = "INSERT INTO registro_compra(Id_Remedio, Id_Cliente, Data_compra, Quantidade) VALUES ('" + id + "','" + IDuser + "','" + datevar + "','" + qtd + "')";
+                                con_cliente.statement.executeUpdate(insert_sql);
+                                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso");
+
+                                int newquantidade = Integer.parseInt(quantidadebd) - qtd;
+                                String atualiarsql = "UPDATE remedio SET Estoque = " + newquantidade + " WHERE Id_Rem = " + id;
+                                con_cliente.statement.executeUpdate(atualiarsql);
+
+                                NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
+                                notinha.setVisible(true);
+                                tela.revalidate();
+                                tela.repaint();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Não foi possível comprar, pois a quantidade está indisponível.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Produto não encontrado na base de dados.");
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(UsuarioMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         });
 
@@ -274,9 +441,8 @@ public class UsuarioMenu extends JFrame {
         MenuSobreItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                Sobrenos fun = new Sobrenos();
+                Sobrenos fun = new Sobrenos(2);
                 fun.setVisible(true);
-                dispose();
 
             }
         });
@@ -293,7 +459,7 @@ public class UsuarioMenu extends JFrame {
 
     }
 
-    public static void main(String[] args, int Id_user, String nomeuser) {
+    public static void main(String[] args, int Id_user, String nomeuser) throws SQLException {
         try {
             UsuarioMenu menu = new UsuarioMenu(Id_user, nomeuser);
             menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

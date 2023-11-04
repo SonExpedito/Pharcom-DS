@@ -199,7 +199,7 @@ public class Remedio extends JFrame {
                        msg="Gravado com sucesso";
                     }
                     else{
-                        sql = "update remedio set Nome_Rem='"+nome+"',Categoria_Num='"+email+"',Preço='"+tel+"',Estoque='"+dt+"',Descrição='"+des+"'where Id_Rem="+tCodigo.getText();
+                        sql = "update remedio set Nome_Rem='"+nome+"',Categoria_Num='"+email+"',Preço='"+tel+"',Estoque='"+dt+"',Descrição='"+des+"'where Id_Rem=" + tCodigo.getText();
                         msg="Alterado com sucesso";
                     }
                     

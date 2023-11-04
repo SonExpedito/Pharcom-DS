@@ -27,14 +27,14 @@ public class Login extends JFrame {
 
     Conexao con_cliente;
 
-    JLabel ilogo,iuser,isenha,rTitulo,Login, Senha1;
+    JLabel ilogo, iuser, isenha, rTitulo, Login, Senha1;
     JTextField Nome;
     JButton Logar;
     JPasswordField Senha;
-     int tentativas = 3;
+    int tentativas = 3;
 
     public Login() {
-       
+
         Container tela = getContentPane();
 
         con_cliente = new Conexao();
@@ -43,8 +43,6 @@ public class Login extends JFrame {
         setTitle("Login");
         setResizable(false);
         tela.setLayout(null);
-        
-        
 
         rTitulo = new JLabel("Login");
         Login = new JLabel("Login");
@@ -52,97 +50,83 @@ public class Login extends JFrame {
         Nome = new JTextField();
         Senha = new JPasswordField();
         Logar = new JButton("Logar");
-        
-    
-       
-     
-        
+
         ImageIcon icone = new ImageIcon("src/imagens/icone.png"); // Substitua pelo caminho correto do ícone
         setIconImage(icone.getImage());
-        
+
         ImageIcon user = new ImageIcon("src/imagens/usuario.png");
         ImageIcon senhas = new ImageIcon("src/imagens/senha.png");
         ImageIcon logo = createResizedImageIcon("src/imagens/logo.png", 500, 400);
-        
+
         iuser = new JLabel(user);
-        isenha= new JLabel(senhas);
-        
+        isenha = new JLabel(senhas);
+
         ilogo = new JLabel(logo);
-        
+
         iuser.setBounds(3, 105, 220, 30);
         isenha.setBounds(3, 205, 220, 30);
-        ilogo.setBounds(400,60,400,300);
-        
-        rTitulo.setBounds(200,5,150,100);
+        ilogo.setBounds(400, 60, 400, 300);
+
+        rTitulo.setBounds(200, 5, 150, 100);
         Login.setBounds(130, 80, 150, 30);
         Senha1.setBounds(130, 180, 150, 30);
         Nome.setBounds(130, 105, 220, 30);
         Senha.setBounds(130, 205, 220, 30);
         Logar.setBounds(165, 305, 150, 30);
-        
-        rTitulo.setForeground(new Color(43,45,66));
-        Nome.setForeground(new Color(43,45,66));
-        Senha.setForeground(new Color(43,45,66));
-        
-        rTitulo.setFont(new Font("Tahoma",Font.BOLD,30));
+
+        rTitulo.setForeground(new Color(43, 45, 66));
+        Nome.setForeground(new Color(43, 45, 66));
+        Senha.setForeground(new Color(43, 45, 66));
+
+        rTitulo.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         Logar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-   
-                    String pesquisa = "select * from funcionário where Usuário like '" +Nome.getText() + "' && Senha = " +Senha.getText() + "";
-                    con_cliente.executaSQL(pesquisa);
-                    
-                    try {
-                        if(con_cliente.resultset.first()){
-                           MenuAdm Adm = new MenuAdm();
-                            Adm.setVisible(true);
+
+                String pesquisa = "select * from funcionário where Usuário like '" + Nome.getText() + "' && Senha = " + Senha.getText() + "";
+                con_cliente.executaSQL(pesquisa);
+
+                try {
+                    if (con_cliente.resultset.first()) {
+                        MenuAdm Adm = new MenuAdm();
+                        Adm.setVisible(true);
+                        dispose();
+                    } else {
+                        String pesquisa2 = "select * from cliente where Usuário like '" + Nome.getText() + "' && Senha = " + Senha.getText() + "";
+                        con_cliente.executaSQL(pesquisa2);
+                        if (con_cliente.resultset.first()) {
+                            String iduser = con_cliente.resultset.getString("Id_Cliente");
+                            String nomeuser = con_cliente.resultset.getString("Nome");
+                            int Id_user = Integer.parseInt(iduser);
+                            UsuarioMenu User = new UsuarioMenu(Id_user, nomeuser);
+                            User.setVisible(true);
                             dispose();
-                        }else{
-                            String pesquisa2 = "select * from cliente where Usuário like '" +Nome.getText() + "' && Senha = " +Senha.getText() + "";
-                            con_cliente.executaSQL(pesquisa2);
-                            if(con_cliente.resultset.first()){
-                                String iduser = con_cliente.resultset.getString("Id_Cliente");
-                                String nomeuser = con_cliente.resultset.getString("Nome");
-                                int Id_user = Integer.parseInt(iduser);
-                                    UsuarioMenu User = new UsuarioMenu(Id_user, nomeuser);
-                                    User.setVisible(true);
-                                     dispose();
-                            }else{      
+                        } else {
                             tentativas--;
-                            JOptionPane.showMessageDialog(null, "Usuário ou Senha incorreta \n" +tentativas +"  tentativas restantes.");
-                             Nome.setText("");
-                             Senha.setText("");
-                             }
-                     if(tentativas<=0){
-                                    JOptionPane.showMessageDialog(null, "Você já realizou todas tentativas, fechando o programa. " );
-                                    con_cliente.desconecta();
-                                    System.exit(0);
-                            }
+                            JOptionPane.showMessageDialog(null, "Usuário ou Senha incorreta \n" + tentativas + "  tentativas restantes.");
+                            Nome.setText("");
+                            Senha.setText("");
                         }
-                    } 
-                     catch (NullPointerException ex){
-                            JOptionPane.showMessageDialog(null, "Insira todos os campos");
+                        if (tentativas <= 0) {
+                            JOptionPane.showMessageDialog(null, "Você já realizou todas tentativas, fechando o programa. ");
+                            con_cliente.desconecta();
+                            System.exit(0);
+                        }
                     }
-                    
-                    catch (SQLException ex) {
-                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                        
-                        
-                    } catch (ParseException ex) {
+                } catch (NullPointerException ex) {
+                    JOptionPane.showMessageDialog(null, "Insira todos os campos");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+
+                } catch (ParseException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-
-
-            
-              
             }
         });
-        Logar.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        Logar.setForeground(new Color(237,242,244)); 
-        
-        
-    
+        Logar.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        Logar.setForeground(new Color(237, 242, 244));
+
         tela.add(ilogo);
         tela.add(iuser);
         tela.add(isenha);
@@ -156,13 +140,11 @@ public class Login extends JFrame {
         ImagePanel backgroundPanel = new ImagePanel("src/imagens/backgroundlogin.png");
         tela.add(backgroundPanel);
         backgroundPanel.setBounds(0, -20, backgroundPanel.getPreferredSize().width, backgroundPanel.getPreferredSize().height);
-        
+
         setSize(800, 450);
         setVisible(true);
         setLocationRelativeTo(null);
-        
-    
-        
+
     }
 
     public static void main(String args[]) {
@@ -211,22 +193,23 @@ public class Login extends JFrame {
     }
 
     public class ImagePanel extends JPanel {
-    private Image backgroundImage;
 
-    public ImagePanel(String imagePath) {
-        backgroundImage = new ImageIcon(imagePath).getImage();
+        private Image backgroundImage;
+
+        public ImagePanel(String imagePath) {
+            backgroundImage = new ImageIcon(imagePath).getImage();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(backgroundImage.getWidth(this), backgroundImage.getHeight(this));
+        }
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(backgroundImage.getWidth(this), backgroundImage.getHeight(this));
-    }
-}
-    
 }

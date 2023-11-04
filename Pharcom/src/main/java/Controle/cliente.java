@@ -24,7 +24,7 @@ import javax.swing.text.MaskFormatter;
 public class cliente extends JFrame {
 
     Conexao con_cliente;
-    JLabel rCodigo, rNome, rData, rUsuario, rSenha, rEmail, rCPF,rTitulo;
+    JLabel rCodigo, rNome, rData, rUsuario, rSenha, rEmail, rCPF, rTitulo;
     JTextField tCodigo, tNome, tUsuario, tSenha, tEmail, tCPF, tPesquisar;
     JFormattedTextField tData;
     MaskFormatter mData;
@@ -36,7 +36,7 @@ public class cliente extends JFrame {
     public cliente() throws SQLException, ParseException {
 
         Container tela = getContentPane();
-        
+
         ImageIcon icone = new ImageIcon("src/imagens/icone.png"); // Substitua pelo caminho correto do ícone
         setIconImage(icone.getImage());
 
@@ -47,12 +47,12 @@ public class cliente extends JFrame {
         rSenha = new JLabel("Senha:");
         rEmail = new JLabel("Email:");
         rCPF = new JLabel("CPF:");
-        
-          rTitulo = new JLabel("Cliente");
-             rTitulo.setBounds(450,3,150,50);
-        rTitulo.setForeground(new Color(43,45,66));
+
+        rTitulo = new JLabel("Cliente");
+        rTitulo.setBounds(450, 3, 150, 50);
+        rTitulo.setForeground(new Color(43, 45, 66));
         rTitulo.setFont(new Font("Tahoma", Font.BOLD, 20));
-        
+
         tCodigo = new JTextField();
         tNome = new JTextField();
         tData = new JFormattedTextField();
@@ -61,13 +61,13 @@ public class cliente extends JFrame {
         tEmail = new JTextField();
         tCPF = new JTextField();
         tPesquisar = new JTextField();
-        
-        tela.setBackground(new Color(237,241,243));
-        
-         try {
-           
-           MaskFormatter mData = new MaskFormatter("####/##/##");
-    
+
+        tela.setBackground(new Color(237, 241, 243));
+
+        try {
+
+            MaskFormatter mData = new MaskFormatter("####/##/##");
+
             tData = new JFormattedTextField(mData);
             tData.setBounds(100, 140, 30, 20);
         } catch (java.text.ParseException e) {
@@ -96,13 +96,13 @@ public class cliente extends JFrame {
         pesquisar = new JButton("Pesquisar");
         sair = new JButton("Menu");
 
-         sair.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                try{
-                MenuAdm user = new MenuAdm(); 
-                user.setVisible(true);
-                dispose();
-                }catch (SQLException erro) {
+        sair.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    MenuAdm user = new MenuAdm();
+                    user.setVisible(true);
+                    dispose();
+                } catch (SQLException erro) {
                     JOptionPane.showMessageDialog(null, "Não foi possivel acessar o primeiro registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
                 } catch (ParseException ex) {
                     Logger.getLogger(cliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -209,7 +209,7 @@ public class cliente extends JFrame {
 
                 try {
                     if (tCodigo.getText().equals("")) {
-                        sql = "insert into cliente( Nome, DataNasc, Usuário, Senha, Email,  CPF) values ( '" + nome + "','" + data + "','" 
+                        sql = "insert into cliente( Nome, DataNasc, Usuário, Senha, Email,  CPF) values ( '" + nome + "','" + data + "','"
                                 + User + "','" + senha + "','" + email + "','" + cpf + "')";
                         msg = "Gravação de um novo registro";
                     } else {
@@ -317,39 +317,36 @@ public class cliente extends JFrame {
         excluir.setBounds(830, 320, 100, 30);
         tela.add(excluir);
 
-        primeiro.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        primeiro.setForeground(new Color(237,242,244)); 
-        
-         anterior.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        anterior.setForeground(new Color(237,242,244)); 
-        
-         proximo.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        proximo.setForeground(new Color(237,242,244)); 
-        
-         ultimo.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        ultimo.setForeground(new Color(237,242,244)); 
-        
-         registro.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        registro.setForeground(new Color(237,242,244)); 
-        
-         gravar.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        gravar.setForeground(new Color(237,242,244)); 
-        
-         alterar.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        alterar.setForeground(new Color(237,242,244)); 
-        
-         excluir.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        excluir.setForeground(new Color(237,242,244)); 
-        
-        pesquisar.setBackground(new Color(239,35,60)); // Define a cor de fundo do botão como azul
-        pesquisar.setForeground(new Color(237,242,244)); 
-        
-         sair.setBackground(new Color(43,45,66)); // Define a cor de fundo do botão como azul
-        sair.setForeground(new Color(237,242,244)); 
-        
-        
-        
-        
+        primeiro.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        primeiro.setForeground(new Color(237, 242, 244));
+
+        anterior.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        anterior.setForeground(new Color(237, 242, 244));
+
+        proximo.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        proximo.setForeground(new Color(237, 242, 244));
+
+        ultimo.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        ultimo.setForeground(new Color(237, 242, 244));
+
+        registro.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        registro.setForeground(new Color(237, 242, 244));
+
+        gravar.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        gravar.setForeground(new Color(237, 242, 244));
+
+        alterar.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        alterar.setForeground(new Color(237, 242, 244));
+
+        excluir.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        excluir.setForeground(new Color(237, 242, 244));
+
+        pesquisar.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+        pesquisar.setForeground(new Color(237, 242, 244));
+
+        sair.setBackground(new Color(43, 45, 66)); // Define a cor de fundo do botão como azul
+        sair.setForeground(new Color(237, 242, 244));
+
         pesquisar.setBounds(60, 355, 150, 30);
 
         tPesquisar.setBounds(220, 355, 250, 30);
@@ -366,14 +363,14 @@ public class cliente extends JFrame {
         rSenha.setBounds(50, 200, 150, 50);
         rEmail.setBounds(50, 240, 150, 50);
         rCPF.setBounds(470, 40, 150, 50);
-     
-        rCodigo.setForeground(new Color(215,57,87));
-        rNome.setForeground(new Color(215,57,87));
-        rData.setForeground(new Color(215,57,87));
-        rUsuario.setForeground(new Color(215,57,87));
-        rSenha.setForeground(new Color(215,57,87));
-        rEmail.setForeground(new Color(215,57,87));
-        rCPF.setForeground(new Color(215,57,87));
+
+        rCodigo.setForeground(new Color(215, 57, 87));
+        rNome.setForeground(new Color(215, 57, 87));
+        rData.setForeground(new Color(215, 57, 87));
+        rUsuario.setForeground(new Color(215, 57, 87));
+        rSenha.setForeground(new Color(215, 57, 87));
+        rEmail.setForeground(new Color(215, 57, 87));
+        rCPF.setForeground(new Color(215, 57, 87));
 
         rCodigo.setFont(new Font("Tahoma", Font.BOLD, 15));
         rNome.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -382,7 +379,6 @@ public class cliente extends JFrame {
         rSenha.setFont(new Font("Tahoma", Font.BOLD, 15));
         rEmail.setFont(new Font("Tahoma", Font.BOLD, 15));
         rCPF.setFont(new Font("Tahoma", Font.BOLD, 15));
-        
 
         tela.add(rTitulo);
         tela.add(rCodigo);
@@ -408,8 +404,8 @@ public class cliente extends JFrame {
         tela.add(tSenha);
         tela.add(tEmail);
         tela.add(tCPF);
-        
-         ImagePanel backgroundPanel = new ImagePanel("src/imagens/backgroundcrud.png");
+
+        ImagePanel backgroundPanel = new ImagePanel("src/imagens/backgroundcrud.png");
         tela.add(backgroundPanel);
         backgroundPanel.setBounds(0, -20, backgroundPanel.getPreferredSize().width, backgroundPanel.getPreferredSize().height);
 
@@ -417,15 +413,15 @@ public class cliente extends JFrame {
         preencherTabela();
         posicionarRegistro();
     }
-    
-     //método posicionarRegistro
-    public void posicionarRegistro(){
-        try{
+
+    //método posicionarRegistro
+    public void posicionarRegistro() {
+        try {
             con_cliente.resultset.first(); // posiciona no 1° registro da tabela
             mostrar_Dados(); // chama o método que irá buscar o dado da tabela
-           }catch(SQLException erro){
-           JOptionPane.showMessageDialog(null,"Não foi possível posicionar no primeiro registro: "+erro,"Mensagem do Programa",JOptionPane.INFORMATION_MESSAGE);    
-           }
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Não foi possível posicionar no primeiro registro: " + erro, "Mensagem do Programa", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public void mostrar_Dados() {
@@ -437,9 +433,9 @@ public class cliente extends JFrame {
             tSenha.setText(con_cliente.resultset.getString("Senha"));
             tEmail.setText(con_cliente.resultset.getString("Email"));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-           String dataFormatada = sdf.format(con_cliente.resultset.getDate("DataNasc"));
-           tData.setText(dataFormatada);
-            
+            String dataFormatada = sdf.format(con_cliente.resultset.getDate("DataNasc"));
+            tData.setText(dataFormatada);
+
             tCPF.setText(con_cliente.resultset.getString("CPF"));
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Não localizou dados: " + erro, "Mensagem do prograna", JOptionPane.INFORMATION_MESSAGE);
@@ -476,22 +472,23 @@ public class cliente extends JFrame {
         }
     }
 
-        public class ImagePanel extends JPanel {
-    private Image backgroundImage;
+    public class ImagePanel extends JPanel {
 
-    public ImagePanel(String imagePath) {
-        backgroundImage = new ImageIcon(imagePath).getImage();
-    }
+        private Image backgroundImage;
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
+        public ImagePanel(String imagePath) {
+            backgroundImage = new ImageIcon(imagePath).getImage();
+        }
 
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(backgroundImage.getWidth(this), backgroundImage.getHeight(this));
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(backgroundImage.getWidth(this), backgroundImage.getHeight(this));
+        }
     }
-}
 }

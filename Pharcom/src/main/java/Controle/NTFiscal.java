@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -36,72 +37,87 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class NTFiscal extends JFrame {
 
     Conexao con_cliente;
-    JLabel data,horario, nome, produto, quantidade;
+    JLabel data, horario, nome, produto, quantidade, valor;
 
-    public NTFiscal(String nomeuser, String produtonome) {
-        Container tela = getContentPane();
-
-        ImageIcon icone = new ImageIcon("src/imagens/icone.png"); // Substitua pelo caminho correto do ícone
-        setIconImage(icone.getImage());
-
+    public NTFiscal(String nomeuser, int produtoid, int quantidadecompra) throws SQLException {
         con_cliente = new Conexao();
         con_cliente.conecta();
-        
-        LocalDate datazina = LocalDate.now();
-        LocalTime timezinho = LocalTime.now();
-        String horaFormatada = timezinho.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        
-        nome = new JLabel("Cliente: " + nomeuser);
-        produto = new JLabel("Produto: " +produtonome);
-        quantidade = new JLabel("Quantidade: 1");
-        data = new JLabel ("Data: " +datazina);
-        horario = new JLabel ("Hora: " +horaFormatada);
-        
-        nome.setForeground(new Color(43, 45, 66));
-        nome.setFont(new Font("Tahoma", Font.BOLD, 12));
-        nome.setBounds(50,220,200,100);
-        
-        produto.setForeground(new Color(43, 45, 66));
-        produto.setFont(new Font("Tahoma", Font.BOLD, 12));
-        produto.setBounds(50,250,200,100);
-        
-        quantidade.setForeground(new Color(43, 45, 66));
-        quantidade.setFont(new Font("Tahoma", Font.BOLD, 12));
-        quantidade.setBounds(50,280,200,100);
-        
-        data.setForeground(new Color(43, 45, 66));
-        data.setFont(new Font("Tahoma", Font.BOLD, 12));
-        data.setBounds(50,310,200,100);
-        
-        horario.setForeground(new Color(43, 45, 66));
-        horario.setFont(new Font("Tahoma", Font.BOLD, 12));
-        horario.setBounds(50,340,200,100);
-        
-    
 
-        
-        tela.add(nome);
-        tela.add(produto);
-        tela.add(quantidade);
-        tela.add(data);
-        tela.add(horario);
+        String pesquisa2 = "select * from remedio where Id_Rem = '" + produtoid + "'";
+        con_cliente.executaSQL(pesquisa2);
 
-        setTitle("Nota Fiscal");
-        setResizable(false);
-        tela.setLayout(null);
+        if (con_cliente.resultset != null && con_cliente.resultset.next()) {
+            String produtonome = con_cliente.resultset.getString("Nome_Rem");
 
-        ImagePanel backgroundPanel = new ImagePanel("src/imagens/NTFiscal.png");
-        tela.add(backgroundPanel);
-        backgroundPanel.setBounds(0, -20, backgroundPanel.getPreferredSize().width, backgroundPanel.getPreferredSize().height);
+            double produtopreco = con_cliente.resultset.getDouble("Preço");
+            double valorfinal = produtopreco * quantidadecompra;
+            String valorzinfinal = String.format("%.2f", valorfinal);
 
-        setSize(300, 620);
-        setVisible(true);
-        setLocationRelativeTo(null);
+            LocalDate datazina = LocalDate.now();
+            LocalTime timezinho = LocalTime.now();
+            String horaFormatada = timezinho.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
+            nome = new JLabel("Cliente: " + nomeuser);
+            produto = new JLabel("Produto: " + produtonome);
+            quantidade = new JLabel("Quantidade: " + quantidadecompra);
+            data = new JLabel("Data: " + datazina);
+            horario = new JLabel("Hora: " + horaFormatada);
+            valor = new JLabel("Valor Final: " + valorzinfinal);
+
+            nome.setForeground(new Color(43, 45, 66));
+            nome.setFont(new Font("Tahoma", Font.BOLD, 12));
+            nome.setBounds(50, 220, 200, 100);
+
+            produto.setForeground(new Color(43, 45, 66));
+            produto.setFont(new Font("Tahoma", Font.BOLD, 12));
+            produto.setBounds(50, 250, 200, 100);
+
+            quantidade.setForeground(new Color(43, 45, 66));
+            quantidade.setFont(new Font("Tahoma", Font.BOLD, 12));
+            quantidade.setBounds(50, 280, 200, 100);
+
+            data.setForeground(new Color(43, 45, 66));
+            data.setFont(new Font("Tahoma", Font.BOLD, 12));
+            data.setBounds(50, 310, 200, 100);
+
+            horario.setForeground(new Color(43, 45, 66));
+            horario.setFont(new Font("Tahoma", Font.BOLD, 12));
+            horario.setBounds(50, 340, 200, 100);
+
+            valor.setForeground(new Color(43, 45, 66));
+            valor.setFont(new Font("Tahoma", Font.BOLD, 12));
+            valor.setBounds(50, 370, 200, 100);
+
+            Container tela = getContentPane();
+
+            ImageIcon icone = new ImageIcon("src/imagens/icone.png"); // Substitua pelo caminho correto do ícone
+            setIconImage(icone.getImage());
+
+            tela.add(nome);
+            tela.add(produto);
+            tela.add(quantidade);
+            tela.add(data);
+            tela.add(horario);
+            tela.add(valor);
+
+            setTitle("Nota Fiscal");
+            setResizable(false);
+            tela.setLayout(null);
+
+            ImagePanel backgroundPanel = new ImagePanel("src/imagens/NTFiscal.png");
+            tela.add(backgroundPanel);
+            backgroundPanel.setBounds(0, -20, backgroundPanel.getPreferredSize().width, backgroundPanel.getPreferredSize().height);
+
+            setSize(300, 620);
+            setVisible(true);
+            setLocationRelativeTo(null);
+        } else {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado na base de dados.");
+        }
     }
 
-    public static void main(String[] args, String nomeuser, String produtonome) {
-        NTFiscal menu = new NTFiscal(nomeuser, produtonome);
+    public static void main(String[] args, String nomeuser, int produtoid, int quantidadecompra) throws SQLException {
+        NTFiscal menu = new NTFiscal(nomeuser, produtoid, quantidadecompra);
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {
