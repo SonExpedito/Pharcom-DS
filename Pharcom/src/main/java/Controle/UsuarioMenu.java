@@ -242,6 +242,7 @@ public class UsuarioMenu extends JFrame {
 
                                 NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
                                 notinha.setVisible(true);
+                                dispose();
                                 tela.revalidate();
                                 tela.repaint();
                             } catch (SQLException ex) {
@@ -285,6 +286,7 @@ public class UsuarioMenu extends JFrame {
 
                                 NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
                                 notinha.setVisible(true);
+                                dispose();
                                 tela.revalidate();
                                 tela.repaint();
                             } catch (SQLException ex) {
@@ -328,6 +330,7 @@ public class UsuarioMenu extends JFrame {
 
                                 NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
                                 notinha.setVisible(true);
+                                dispose();
                                 tela.revalidate();
                                 tela.repaint();
                             } catch (SQLException ex) {
@@ -371,6 +374,7 @@ public class UsuarioMenu extends JFrame {
 
                                 NTFiscal notinha = new NTFiscal(nomeuser, id, qtd);
                                 notinha.setVisible(true);
+                                dispose();
                                 tela.revalidate();
                                 tela.repaint();
                             } catch (SQLException ex) {

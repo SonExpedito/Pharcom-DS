@@ -39,6 +39,7 @@ public class NTFiscal extends JFrame {
 
     Conexao con_cliente;
     JLabel data, horario, nome, produto, quantidade, valor,CFOP;
+    JButton product1button, product2button;
 
     public NTFiscal(String nomeuser, int produtoid, int quantidadecompra) throws SQLException {
         con_cliente = new Conexao();
@@ -104,6 +105,31 @@ public class NTFiscal extends JFrame {
             valor.setForeground(new Color(43, 45, 66));
             valor.setFont(new Font("Tahoma", Font.BOLD, 12));
             valor.setBounds(50, 400, 200, 100);
+            
+            product1button = new JButton("Imprimir");
+            product1button.setBounds(180, 350, 80, 30);
+            product1button.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+            product1button.setForeground(new Color(237, 242, 244));
+            
+            product2button = new JButton("Voltar");
+            product2button.setBounds(180, 400, 80, 30);
+            product2button.setBackground(new Color(239, 35, 60)); // Define a cor de fundo do botão como azul
+            product2button.setForeground(new Color(237, 242, 244));
+            
+            
+            product2button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                UsuarioMenu log = null;
+                try {
+                    log = new UsuarioMenu(produtoid,nomeuser);
+                } catch (SQLException ex) {
+                    Logger.getLogger(NTFiscal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                log.setVisible(true);
+                dispose();
+            }
+        });
+
 
             Container tela = getContentPane();
 
@@ -117,6 +143,8 @@ public class NTFiscal extends JFrame {
             tela.add(horario);
             tela.add(valor);
             tela.add(CFOP);
+            tela.add(product1button);
+            tela.add(product2button);
 
             setTitle("Nota Fiscal");
             setResizable(false);
